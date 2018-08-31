@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dynamicFieldsPlugin">
+<head>
+  <title>LinusBot</title>
+  <link rel="icon" href="../images/logo.png">
+  <link rel="stylesheet" type="text/css" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="myFunction()">
+<div id="loader"></div>
+ <div class="container" id="container" style="display: none">
+  <form name="myForm">
+    <div class="row" style="text-align: center;">
+      <div class="col-25">
+        <label for="fname">Período das inscrições<br>(Formato: "dd/mm/aa hh:mm:ss-dd/mm/aa hh:mm:ss")</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="inscri" name="firstname" placeholder="">
+      </div>
+    </div>
+    <div class="row" style="text-align: center;">
+      <div class="col-25">
+        <label for="lname">Data da competição<br>(Formato: "dd/mm/aa hh:mm:ss")</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="compet" name="lastname" placeholder="dd/mm/aa hh:mm:ss">
+      </div>
+    </div>
+      <div class="row" style="text-align: center;">
+        <div class="col-25">
+          <label for="lname">Link para inscrição<br>(Formato: "http://peteletrica.com")</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="link" name="lastname" placeholder="http://peteletrica.com">
+        </div>
+      </div>
+      <div ng-controller="dynamicFields" class="row" style="text-align: center;">
+      <!-- <input type="button" value="+"/> -->
+      <div class="form-group" data-ng-repeat="choice in choices" style="text-align: center">
+        <label for="choice" ng-show="showChoiceLabel(choice)">Choices</label>
+        <div class="row rowcentered">
+            <div class="col-20" style="margin: auto">
+              <p>Aula {{choice.id}}</label>
+            </div>
+        </div>
+        <form name="aula" id=aula1>
+            <div class="row rowcentered">
+              <div class="col-20" style="margin: auto">
+                <input type="text" id="{{'titulo'+choice.id}}" name="titulo" placeholder="Título">
+              </div>
+            </div>
+            <div class="row rowcentered">
+              <div class="col-20" style="margin: auto">
+                <input type="text" id="{{'data'+choice.id}}" name="data" placeholder="Data: dd/mm/aa-hh:mm dd/mm/aa-hh:mm">
+              </div>
+            </div>
+            <div class="row rowcentered">
+              <div class="col-20" style="margin: auto">
+                <input type="text" id="{{'local'+choice.id}}" name="local" placeholder="Local">
+              </div>
+            </div>
+            <div class="row rowcentered">
+              <div class="col-20" style="margin: auto">
+                <input type="text" id="{{'professor'+choice.id}}" name="professor" placeholder="Professor">
+              </div>
+            </div>
+            <div class="row rowcentered">
+              <div class="col-20" style="margin: auto">
+                <input type="text" id="{{'descricao'+choice.id}}" name="descricao" placeholder="Descrição">
+              </div>
+            </div>
+            <div class="row rowcentered">
+                <div class="col-20" style="margin: auto">
+                  <input type="text" id="{{'arquivo'+choice.id}}" name="arquivo" placeholder="Link para aula">
+                </div>
+              </div>
+        </form>
+        <!-- <div ng-include="'aula.html'" id="{{choice.id}}"></div> -->
+      </div>
+      <br>
+      <button ng-click="removeNewChoice()">Remover última aula</button>
+      <button ng-click="addNewChoice()">Adicionar aula</button>
+      <br>
+      <!-- <input type="text" ng-modal="{{choice.name}}" name="" placeholder="Enter a restaurant name" value="{{choice.id}}"> -->
+      <br>
+      <input type="submit" value="Submeter" onclick="return validateForm()">
+      <input type="submit" value="Desconectar" onclick="return disconnect()">
+    </div>
+  </form>
+</div>
+<script>
+  var timeout;
+
+  function myFunction() {
+      timeout = setTimeout(showPage, 2000);
+  }
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("container").style.display = "block";
+  }
+</script>
+<script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.4.0/firebase-database.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript" src="logic.js"></script>
+</body>
+</html>
